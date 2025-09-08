@@ -1,0 +1,153 @@
+.homeBg{
+    width:100vw;
+}
+.homeContentBg{
+    margin-top: 120px;
+    height: calc(100vh - 120px); 
+    position: relative;
+    display: flex;
+    overflow-y: auto;
+}
+
+.filterBox{
+    width: 20%;
+    height: 70vh;
+    position: sticky;
+    top:0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+
+.mainBox{
+    width:80%;
+}
+
+
+.SearchAndFilterBox{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.searchBox{
+    width:70%;
+    height: 60px;
+    background-color: rgb(238, 238, 238);
+    border-radius: 7px;
+     box-shadow: 0 2px  5px rgba(0, 0, 0, 0.192);
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+}
+
+.searchBox input {
+    width:80%;
+    height: 100%;
+    background-color:transparent;
+    border: none;
+    padding-left: 30px;
+    color: #3a3a3a;
+    outline: none;
+}
+.searchBox svg{
+    font-size: 1.2em;
+    color: #b6b5b5;
+    margin-right: 25px;
+}
+
+.searchBox input::placeholder{
+  color: rgb(173, 173, 173);
+}
+
+
+.filtersCta{
+    display: none;
+}
+
+@media(max-width:1024px){
+   .homeContentBg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+   }
+
+   .filterBox{
+    width: 90%;
+    height: 100px;
+    position: sticky;
+    top:0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+
+.mainBox{
+    width:80%;
+
+}
+
+.demo{
+    height: 2000px;
+}
+
+.searchBox{
+    margin: auto;
+}
+
+}
+
+
+@media(max-width:768px){
+    .filterBox{
+        display: none;
+    }
+    .SearchAndFilterBox{
+        position: sticky;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        top:0;
+    }
+
+    .mainBox{
+        width:90%;
+        height: calc(100vh - 180px); 
+        overflow-y: auto;
+        scrollbar-width: none;
+        position: relative;
+    }
+    .searchBox {
+        margin:0;
+        height: 50px;
+    }
+    .filtersCta{
+        display: flex;
+        flex-direction: row;
+        background-color: #efefef;
+        width: 20%;
+        height: 50px;
+        border:none;
+        border-radius:7px;
+        color: #454545;
+        font-size: 0.6em;
+        align-items: center;
+        justify-content: center;
+        gap:10%;
+    }
+    .filtersCta svg{
+        font-size: 1.5em;
+        color: #000;
+    }
+}
+
+

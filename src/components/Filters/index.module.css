@@ -1,0 +1,47 @@
+.filterItem{
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   gap:15px;
+   width: 150px
+}
+.filterIcon{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(236, 236, 236);
+  color: rgb(93, 93, 93);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.filterButton{
+    color: rgb(188, 188, 188);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+@media (max-width:1024px){
+    .filterItem{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   gap:10px;
+   width: 150px;
+   
+}
+
+.filterIcon{
+    width:30px;
+    height: 30px;
+}
+
+.filterButton{
+    font-size: 0.7em;
+}
+}
