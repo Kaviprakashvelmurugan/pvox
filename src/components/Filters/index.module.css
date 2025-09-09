@@ -25,6 +25,11 @@
     cursor: pointer;
 }
 
+
+.turnPink{
+    color: rgb(189, 64, 239);
+}
+
 @media (max-width:1024px){
     .filterItem{
    display: flex;

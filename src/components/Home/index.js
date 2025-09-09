@@ -4,20 +4,25 @@ import Filters from '../Filters'
 import { FaSearch } from "react-icons/fa";
 import { MdOutlineSort } from "react-icons/md";
 import Photo from '../Photo'
+import Video from '../Video'
 
 import Styles from './index.module.css'
 class Home extends Component{
 
-    state  = { photos:[] ,searchInput:''}
+    state  = { photos:[] ,videos:[] ,searchInput:'' ,filterBy:'v1'}
     componentDidMount(){
-         this.fetchFromPexels()
+      this.fetchFromPexels()
     }
 
-
-    fetchFromPexels= async (event)=>{
-    event.preventDefault()
-      const {searchInput} = this.state
-      const fetchUrl = `https://api.pexels.com/v1/search?query=${searchInput}&per_page=20`
+    fetchFromPexels = async () => {
+      const {searchInput,filterBy} = this.state
+       
+      let fetchUrl = `https://api.pexels.com/${filterBy}/search?query=${searchInput}&per_page=21`
+  
+      if (searchInput===''){
+         fetchUrl = `https://api.pexels.com/${filterBy}/search?query=nature&per_page=21`
+      }
+      
       const options = {
         method:'GET',
         headers:{
@@ -30,8 +35,18 @@ class Home extends Component{
        const response = await responseFromPexels.json()
        console.log(response)
        if (responseFromPexels.ok===true){
-         const photosFromPexels = response.photos
-         this.setState({photos:photosFromPexels})
+
+        this.setState(prev=>{
+          if (filterBy==='v1'){
+                const photosFromPexels = response.photos
+                this.setState({photos:photosFromPexels})
+          }
+          else{
+                console.log('yesss')
+                const videosFromPexels = response.videos
+                this.setState({videos:videosFromPexels})
+          }
+        })
        }
       }
 
@@ -42,10 +57,20 @@ class Home extends Component{
 
 
     handleSearch = event => {
-        this.setState({searchInput:event.target.value})
+        this.setState({searchInput:event.target.value}, ()=>{
+          this.fetchFromPexels()
+        })
     }
+
+    filteringFunction = filter => {
+       this.setState({filterBy:filter} , ()=>{
+        this.fetchFromPexels()
+       })
+    }
+
+
     render(){
-        const {photos,searchInput } = this.state
+        const {photos,videos,searchInput,filterBy} = this.state
 
         return (
             <div className={Styles.homeBg}>
@@ -53,7 +78,7 @@ class Home extends Component{
               <div className={Styles.homeContentBg}>
                   <div className={Styles.filterBox}>
                         {
-                            <Filters/>
+                            <Filters filteringFunction= {this.filteringFunction}/>
                         }
                   </div>
 
@@ -65,14 +90,23 @@ class Home extends Component{
                            </button>
                             <div className={Styles.searchBox}>
                                <input value ={searchInput} onChange = {this.handleSearch} placeholder='Search for free HD photos and videos...' type='text' />
-                              <FaSearch/>
+                              <FaSearch />
                             </div>
                      </form>
                      
-                     <ul className={Styles.apiBox}>
-                        {photos.length>0 && photos.map(each=>{
-                            return <Photo  photo={each}/>
+                     <ul className={`${ filterBy==='v1' ? Styles.photoApiBox : Styles.videoApiBox}`}>
+                        
+                        {filterBy==='v1' && photos.length>0 && photos.map(each=>{
+                            return <Photo  photo={each}  />
                         })}
+
+                        {
+                        
+                        videos.length>0 && videos.map(each=>{
+                          
+                          return <Video video={each}/>
+                        })
+                        }
                      </ul>
                   </div>
               </div>
