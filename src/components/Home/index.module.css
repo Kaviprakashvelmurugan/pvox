@@ -66,7 +66,7 @@
 }
 
 
-.filtersCta{
+.filtersWrapper{
     display: none;
 }
 
@@ -87,7 +87,61 @@
     list-style-type: none;
 }
 
+.pvoxLoader{
+   width:95%;
+   height: calc((100vh - 120px) - 100px);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
 
+.loaderVideo{
+    width: 80px;
+}
+
+.pvoxErrorBg{
+    width:95%;
+    height: calc((100vh - 120px) - 100px);
+    display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center; 
+}
+
+.pvoxErrorBg video{
+    width:600px;
+}
+
+.errorText{
+    display: none;
+}
+
+
+.nothingLikedBg{
+    width:95%;
+    height: calc((100vh - 120px) - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:20px;
+    align-items: center;
+}
+
+.nothingLikedBg video{
+    width: 250px;
+}
+.nothingLikedBg p{
+    font-size: 1em;
+}
+
+.likedDataBg{
+    width:95%;
+    margin-top: 50px;
+    column-count: 3;
+    padding-left: 0;
+    list-style-type: none;
+}
 @media(max-width:1024px){
    .homeContentBg{
     display: flex;
@@ -164,25 +218,39 @@
         margin:0;
         height: 50px;
     }
-    .filtersCta{
+
+    .filtersWrapper {
         display: flex;
-        flex-direction: row;
-        background-color: #efefef;
-        width: 20%;
-        height: 50px;
-        border:none;
-        border-radius:7px;
-        color: #454545;
-        font-size: 0.6em;
-        align-items: center;
-        justify-content: center;
-        gap:10%;
-        cursor: pointer;
-    }
-    .filtersCta svg{
-        font-size: 1.5em;
-        color: #000;
-    }
+      position: relative;
+      width: 20%;
+}
+
+.filtersCta {
+  display: flex;
+  background-color: #efefef;
+  width: 100%;
+  height: 50px;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 36px; /* make space for icon */
+  border-radius: 7px;
+  color: #454545;
+  font-size: 0.8em;
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+}
+
+.filtersIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* so clicks still open select */
+  color: #000;
+}
    .photoApiBox{
     width:100%;
     margin-top: 50px;
@@ -194,7 +262,9 @@
     column-count: 1;
     width: 100%;
   }
-
+  .pvoxErrorBg video{
+    width:400px;
+}
 }
 
 

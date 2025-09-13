@@ -17,17 +17,19 @@ const Filters = ({filteringFunction}) => {
          setFilterState(prev=>{
             if (event.target.id==='videos'){
                 filteringFunction(event.target.id)
-                return {photos:false,videos:!prev.videos,trending:false,favorites:false}
+                return {photos:false,videos:true,trending:false,favorites:false}
             }
             else if (event.target.id==='photos'){
                 filteringFunction('v1')
-                return {photos:!prev.photos,videos:false,trending:false,favorites:false}
+                return {photos:true,videos:false,trending:false,favorites:false}
             }
             else if (event.target.id==='favorites'){
-                return {photos:false,videos:false,trending:false,favorites:!prev.favorites}
+                filteringFunction('favorites')
+                return {photos:false,videos:false,trending:false,favorites:true}
             }
             else{
-                return {photos:false,videos:false,trending:!prev.trending,favorites:false}
+                filteringFunction('trending')
+                return {photos:false,videos:false,trending:true,favorites:false}
             }
          }) 
    } 

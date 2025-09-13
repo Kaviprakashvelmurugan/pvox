@@ -3,13 +3,16 @@ import {useState,useRef} from 'react'
 import Styles from './index.module.css'
 
 import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
+
 
 const Photo = ({photo}) => {
-    const {src,alt,avg_color,width,height,photographer} = photo
-
+    const {id,src,alt,avg_color,width,height,photographer,liked} = photo
+    
     const [imgLoaded,setImageLoaded] = useState(false)
+    const [isLiked,setLike] = useState(liked)
 
-
+    
     ///Reference /// 
 
     const photoRef = useRef()
@@ -32,6 +35,25 @@ const Photo = ({photo}) => {
         }
     }
 
+    const handlePhotoLiking = () => {
+        if (!isLiked){
+            setLike(true)
+            const photoDetails = {...photo,liked:true}
+            const storedList = JSON.parse(localStorage.getItem('likedList'))
+            storedList.push(photoDetails)
+            localStorage.setItem('likedList',JSON.stringify(storedList))
+        }
+        else{
+            setLike(false)
+            const storedList = JSON.parse(localStorage.getItem('likedList'))
+            const newLikedList = storedList.filter(each=>{
+                return each.id!==id
+            })
+            localStorage.setItem('likedList',JSON.stringify(newLikedList))
+            
+        }
+    }
+
     return (
         <Link className={Styles.photoItem} to=''>
            <li className={Styles.photoElement} style = {{background:imgLoaded?'transparent':avg_color,aspectRatio: `${width} / ${height}`}}>
@@ -41,7 +63,8 @@ const Photo = ({photo}) => {
                src={src.original} alt={alt}/>
 
                 <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={Styles.photoOverlay}>
-                   <button ref= {likeRef} className={Styles.photoLikeBox}> <MdFavoriteBorder/> </button>
+
+                   <button onClick = {handlePhotoLiking} ref= {likeRef} className={Styles.photoLikeBox}> {isLiked? <MdFavorite className={Styles.liked}/> :<MdFavoriteBorder/>} </button>
                     <div  ref ={authorRef} className={Styles.photoAuthorBox}>
                       <p> By {photographer}</p>
                    </div>
