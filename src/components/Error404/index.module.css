@@ -1,0 +1,16 @@
+.pvoxErrorBg{
+    width:95%;
+    height: calc((100vh - 120px) - 100px);
+    display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center; 
+}
+
+.pvoxErrorBg video{
+    width:600px;
+}
+
+.errorText{
+    display: none;
+}

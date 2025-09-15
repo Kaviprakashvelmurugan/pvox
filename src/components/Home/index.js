@@ -4,6 +4,7 @@ import Filters from '../Filters'
 import { FaSearch } from "react-icons/fa";
 import Photo from '../Photo'
 import Video from '../Video'
+import Error404 from '../Error404'
 import Pagination from '../Pagination'
 
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -141,13 +142,8 @@ class Home extends Component{
 
 
     show404 = ()=>{
-
-      return (
-        <div className={Styles.pvoxErrorBg}>
-          <h1 className={Styles.errorText} >Error</h1>
-             <video  className={Styles.errorVideo} autoPlay playsInline loop muted> <source src='https://res.cloudinary.com/dysrfxfyv/video/upload/v1757686221/404-pvox_qfgiqq.mp4'  /> 404 </video>
-        </div>
-      )
+      return <Error404/>
+  
     }
 
 
