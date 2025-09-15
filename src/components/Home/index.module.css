@@ -191,6 +191,14 @@
 
 
 @media(max-width:768px){
+    .searchBox input{
+        padding-left: 10px;
+    }
+    .searchBox input::placeholder{
+      color: rgb(173, 173, 173);
+      font-size: 0.8em;
+    }
+
     .filterBox{
         display: none;
     }
@@ -224,6 +232,8 @@
       position: relative;
       width: 20%;
 }
+
+
 
 .filtersCta {
   display: flex;
@@ -262,6 +272,14 @@
     column-count: 1;
     width: 100%;
   }
+
+  .likedDataBg{
+    width:95%;
+    margin-top: 50px;
+    column-count: 2;
+    padding-left: 0;
+    list-style-type: none;
+}
   .pvoxErrorBg video{
     width:400px;
 }

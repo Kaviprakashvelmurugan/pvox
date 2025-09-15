@@ -55,7 +55,7 @@ const Photo = ({photo}) => {
     }
 
     return (
-        <Link className={Styles.photoItem} to=''>
+        <Link className={Styles.photoItem} to =  {`/photos/${id}`} >
            <li className={Styles.photoElement} style = {{background:imgLoaded?'transparent':avg_color,aspectRatio: `${width} / ${height}`}}>
                <img  ref = {photoRef}  onLoad = {()=>{
                   setImageLoaded(true)
