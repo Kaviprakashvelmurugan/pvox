@@ -1,0 +1,44 @@
+.paginationBg{
+    height: 200px;
+    width:95%;
+    list-style-type: none;
+    padding: 0;
+    border:1px solid red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+
+.unClickedButton{
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    outline: none;
+    color:rgb(153, 0, 255);
+    font-size: 0.8em;
+    font-weight: 900;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.clickedButton{
+    background-color:rgb(162, 0, 255) ;
+    color: #fff;
+    height: 40px;
+    width: 40px;
+    outline: none;
+    font-size: 0.8em;
+    font-weight: 900;
+    text-align: center;
+    border: none;
+    border-radius: 25%;
+}
+@media(max-width:1024px){
+    .paginationBg {
+        width: 100%;
+        margin:0;
+    }
+}

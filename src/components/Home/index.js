@@ -4,6 +4,8 @@ import Filters from '../Filters'
 import { FaSearch } from "react-icons/fa";
 import Photo from '../Photo'
 import Video from '../Video'
+import Pagination from '../Pagination'
+
 import { IoMdArrowDropdown } from "react-icons/io";
 
 
@@ -22,7 +24,16 @@ class Home extends Component{
 
     }
 
-    state  = { photos:[] ,videos:[] ,searchInput:'' ,filterBy:'v1' , apiStatus:this.apiStatusObj.loading}
+    state  = {
+                photos:[] ,
+                videos:[] ,
+                searchInput:'' ,
+                filterBy:'v1' , 
+                page:1,
+                maxPage:0,
+                apiStatus:this.apiStatusObj.loading ,
+
+            }
 
     
     
@@ -32,16 +43,14 @@ class Home extends Component{
     }
 
    fetchFromPexels = async () => {
-      
-
-      const { searchInput, filterBy } = this.state;
-      
+      const { searchInput, filterBy, page } = this.state;
+      console.log('page inside fetch' , page)
       if (filterBy==='favorites'){
          this.setState({ apiStatus: this.apiStatusObj.favorites });
          return;
       }
      // Default query if search input is empty
-      let fetchUrl = `https://api.pexels.com/${filterBy}/search?query=${searchInput || 'nature'}&per_page=21`;
+      let fetchUrl = `https://api.pexels.com/${filterBy}/search?query=${searchInput || 'nature'}&page=${page}&per_page=21`;
     
       if (filterBy==='trending'){
   
@@ -67,6 +76,7 @@ class Home extends Component{
       }
 
       const response = await responseFromPexels.json();
+      const maxPages = Math.ceil(response.total_results / response.per_page)
 
        
     if (filterBy === 'v1') {
@@ -74,7 +84,7 @@ class Home extends Component{
           this.setState({ photos: [], videos: [], apiStatus: this.apiStatusObj.failure });
           return;
         }
-        this.setState({ photos: response.photos, apiStatus: this.apiStatusObj.success });
+        this.setState({ photos: response.photos, maxPage:maxPages, apiStatus: this.apiStatusObj.success });
      }
 
     else if (filterBy === 'trending') {
@@ -82,15 +92,16 @@ class Home extends Component{
           this.setState({ photos: [], videos: [], apiStatus: this.apiStatusObj.failure });
           return;
        }
-       this.setState({ photos: response.photos, apiStatus: this.apiStatusObj.success });
+       this.setState({ photos: response.photos, maxPage:maxPages,apiStatus: this.apiStatusObj.success });
     }
 
     else if (filterBy === 'videos') {
+     
        if (!response.videos || response.videos.length === 0) {
          this.setState({ photos: [], videos: [], apiStatus: this.apiStatusObj.failure });
        return;
     }
-     this.setState({ videos: response.videos, apiStatus: this.apiStatusObj.success });
+     this.setState({ videos: response.videos,maxPage:maxPages, apiStatus: this.apiStatusObj.success });
    }
 
     } 
@@ -104,7 +115,7 @@ class Home extends Component{
 
 
     handleSearch = event => {
-        this.setState({searchInput:event.target.value}, ()=>{
+        this.setState({searchInput:event.target.value,page:1}, ()=>{
           this.fetchFromPexels()
         })
     }
@@ -115,7 +126,10 @@ class Home extends Component{
        })
     }
 
-
+   handleNextPage = nextPage => {
+    console.log('next page: ',nextPage)
+    this.setState({page:nextPage},this.fetchFromPexels)
+   }
 
     showPvoxLoader = () => {
          return (
@@ -138,29 +152,35 @@ class Home extends Component{
 
 
     showImagesOrVideos = () => {
-      const {photos,videos,filterBy} = this.state
+      const {photos,videos,filterBy,page,maxPage} = this.state
           return (
-             <ul className={`${ filterBy==='v1' || filterBy==='trending' ? Styles.photoApiBox : Styles.videoApiBox}`}>
+            <>
+                   <ul className={`${ filterBy==='v1' || filterBy==='trending' ? Styles.photoApiBox : Styles.videoApiBox}`}>
                         
                         {(filterBy==='v1' || filterBy==='trending') && photos.length>0 && photos.map(each=>{
-                            const photo = {...each,liked:false}
+                            const photo = {...each,liked:false,type:"photo"}
                             return <Photo key ={each.id} photo={photo}  />
                         })}
 
                         {
                         
                         videos.length>0 && videos.map(each=>{
-                          
-                          return <Video key ={each.id} video={each}/>
+                          const video = {...each,liked:false,type:'video'}
+                          return <Video key ={each.id} video={video}/>
                         })
                         }
-                     </ul>
+
+                       
+                  </ul>
+
+                  <Pagination currentPage={page} maxPages = {maxPage} handleNextPage = {this.handleNextPage}/>
+            </>
+             
       )
     }
 
 
     showFavorites = () => {
-
        const likedData = JSON.parse(localStorage.getItem('likedList'))
 
        if (likedData.length===0){
@@ -169,11 +189,16 @@ class Home extends Component{
                      <p>You haven’t liked any videos yet. </p>
                 </div>
        }
-
+       
+       
        return <ul className={Styles.likedDataBg}>
+                 
                  {likedData.map(each=>{
-                  console.log(each)
-                  return <Photo key={each.id} photo={each} />
+                  if (each.type === 'video'){
+                    return <Video key={each.id} video={each}/>
+                  }
+                  
+                   return <Photo key={each.id} photo={each} />
                  })}
              </ul>
     }
@@ -226,13 +251,8 @@ class Home extends Component{
                                <input value ={searchInput} onChange = {this.handleSearch} placeholder='Search for free HD photos and videos...' type='text' />
                               <FaSearch />
                             </div>
-                     </form>
-
-                    
-
-                     
+                     </form>  
                       {this.renderSwitcher()}
-                     
                   </div>
               </div>
             </div>

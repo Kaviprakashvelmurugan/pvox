@@ -2,17 +2,21 @@ import {Link} from  'react-router-dom'
 import {useEffect, useRef,useState} from 'react'
 
 import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 
 import Styles from './index.module.css'
 
 const Video = ({video}) => {
-    const {video_files,user,width,height} = video
     
+    const {id,video_files,user,width,height,liked} = video
+    console.log(user)
     const {name} = user
     const videoUrl = video_files[0].link;
-
+    
+    
     
     const [ready, setReady] = useState(false);
+    const [isLiked,setLike] = useState(liked)
 
     ///References///
     const videoRef = useRef()
@@ -54,12 +58,32 @@ const Video = ({video}) => {
         }
     }
 
+
+    const handleVideoLiking = () => {
+
+        if (!isLiked){
+            setLike(true)
+            const photoDetails = {...video,liked:true}
+            const storedList = JSON.parse(localStorage.getItem('likedList'))
+            storedList.push(photoDetails)
+            localStorage.setItem('likedList',JSON.stringify(storedList))
+        }
+        else{
+            setLike(false)
+            const storedList = JSON.parse(localStorage.getItem('likedList'))
+            const newLikedList = storedList.filter(each=>{
+                return each.id!==id
+            })
+            localStorage.setItem('likedList',JSON.stringify(newLikedList))
+            
+        }
+    }
     return (
      <Link>
          <li  className={Styles.videoElement}>
             <video   style = {{aspectRatio:`${width}/${height}`}}  ref={videoRef} playsInline muted> <source src={videoUrl}></source></video>
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={Styles.videoOverlay}>
-                 <button ref= {likeRef} className={Styles.videoLikeBox}> <MdFavoriteBorder/> </button>
+                 <button onClick = {handleVideoLiking} ref= {likeRef} className={Styles.videoLikeBox}>  {isLiked? <MdFavorite className={Styles.liked}/> :<MdFavoriteBorder/>} </button>
                  <div  ref ={authorRef} className={Styles.videoAuthorBox}>
                      <p> By {name}</p>
                  </div>
