@@ -3,7 +3,7 @@
     width:95%;
     list-style-type: none;
     padding: 0;
-    border:1px solid red;
+    
     display: flex;
     flex-direction: row;
     justify-content: center;
