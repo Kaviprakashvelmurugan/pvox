@@ -33,14 +33,16 @@ class Home extends Component{
                 page:1,
                 maxPage:0,
                 apiStatus:this.apiStatusObj.loading ,
-
+                
             }
 
     
     
     componentDidMount(){
       this.fetchFromPexels()
-      localStorage.setItem('likedList',JSON.stringify([]))
+       if (!localStorage.getItem('likedList')) {
+        localStorage.setItem('likedList', JSON.stringify([]))
+      }
     }
 
    fetchFromPexels = async () => {
@@ -154,7 +156,9 @@ class Home extends Component{
                    <ul className={`${ filterBy==='v1' || filterBy==='trending' ? Styles.photoApiBox : Styles.videoApiBox}`}>
                         
                         {(filterBy==='v1' || filterBy==='trending') && photos.length>0 && photos.map(each=>{
-                            const photo = {...each,liked:false,type:"photo"}
+                            const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
+                            const liked = likedList.some(p => p.id === each.id);
+                            const photo = {...each,liked,type:"photo"}
                             return <Photo key ={each.id} photo={photo}  />
                         })}
 

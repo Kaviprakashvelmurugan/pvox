@@ -10,7 +10,7 @@ const Photo = ({photo}) => {
     const {id,src,alt,avg_color,width,height,photographer,liked} = photo
     
     const [imgLoaded,setImageLoaded] = useState(false)
-    const [isLiked,setLike] = useState(liked)
+    const [isLiked, setLike] = useState(liked);
 
     
     ///Reference /// 
@@ -35,24 +35,22 @@ const Photo = ({photo}) => {
         }
     }
 
-    const handlePhotoLiking = () => {
-        if (!isLiked){
-            setLike(true)
-            const photoDetails = {...photo,liked:true}
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-            storedList.push(photoDetails)
-            localStorage.setItem('likedList',JSON.stringify(storedList))
-        }
-        else{
-            setLike(false)
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-            const newLikedList = storedList.filter(each=>{
-                return each.id!==id
-            })
-            localStorage.setItem('likedList',JSON.stringify(newLikedList))
-            
-        }
-    }
+   const handlePhotoLiking = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const storedList = JSON.parse(localStorage.getItem("likedList")) || [];
+
+      if (!isLiked) {
+        setLike(true);
+        storedList.push({ ...photo, liked: true });
+       localStorage.setItem("likedList", JSON.stringify(storedList));
+      } else {
+         setLike(false);
+         const newList = storedList.filter(each => each.id !== id);
+         localStorage.setItem("likedList", JSON.stringify(newList));
+      }
+    };
 
     return (
         <Link className={Styles.photoItem} to =  {`/photos/${id}`} >
