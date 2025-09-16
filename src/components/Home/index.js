@@ -47,7 +47,6 @@ class Home extends Component{
 
    fetchFromPexels = async () => {
       const { searchInput, filterBy, page } = this.state;
-      console.log('page inside fetch' , page)
       if (filterBy==='favorites'){
          this.setState({ apiStatus: this.apiStatusObj.favorites });
          return;
@@ -57,7 +56,7 @@ class Home extends Component{
     
       if (filterBy==='trending'){
   
-        fetchUrl=`https://api.pexels.com/v1/curated`
+        fetchUrl=`https://api.pexels.com/v1/curated?page=${page}`
       }
 
 
@@ -130,7 +129,6 @@ class Home extends Component{
     }
 
    handleNextPage = nextPage => {
-    console.log('next page: ',nextPage)
     this.setState({page:nextPage},this.fetchFromPexels)
    }
 

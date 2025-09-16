@@ -4,6 +4,7 @@ import {useEffect,useState} from 'react'
 import Styles from './index.module.css'
 
 import NavBar  from '../Navbar'
+import Photo from '../Photo'
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
@@ -17,6 +18,9 @@ const PhotoDetail = () =>{
     
      const [imgLoaded,setImgLoaded] = useState(false)
      const [isLiked,setIsLiked]  = useState(false)
+     const [mainWords,setMainWords] = useState('')
+     const [similarPhotos,setSimilarPhotos] = useState(null)
+
      const {photoId} = useParams()
      
      const fetchPhotoDetails = async () =>{
@@ -34,6 +38,16 @@ const PhotoDetail = () =>{
           const jsonResponse = await response.json()
           if (response.ok){
             setPhotoDetail(jsonResponse)
+            const stopWords = ['a','an','the','in','on','at','by','for','of','to','with','and','or','but','photo','image','picture','stock'];
+            const {alt} = jsonResponse;
+            const altlist = alt.toLowerCase().split(' ')
+            
+            const impWords =altlist.filter(each=>{
+              if (!stopWords.includes(each)){
+                 return each
+              }
+            })
+            setMainWords(impWords.join(' '))
           }
         }
 
@@ -42,6 +56,7 @@ const PhotoDetail = () =>{
         }
     }
 
+    
     useEffect(()=>{
       fetchPhotoDetails()
     },[])
@@ -52,7 +67,32 @@ const PhotoDetail = () =>{
      setIsLiked(likedList.some(p => p.id === photoDetail.id));
      }
     }, [photoDetail]);
+    
 
+
+    const fetchSimilarPhotos = async ()=>{
+       const fetchUrl = `https://api.pexels.com/v1/search?query=${mainWords || 'nature'}&page=1&per_page=20`
+       const options = {
+        method :"GET",
+        headers:{
+          Authorization: process.env.REACT_APP_PEXELS_API_KEY
+        }
+       }
+
+       try {
+         const response = await fetch(fetchUrl,options)
+         const jsonResponse = await response.json()
+         console.log(jsonResponse)
+         setSimilarPhotos(jsonResponse.photos)
+       }
+       catch(error){
+          console.log(error)
+       }
+    }
+
+    useEffect (()=>{
+      fetchSimilarPhotos()
+    },[mainWords])
     
     
     const handleLike = () => {
@@ -60,9 +100,8 @@ const PhotoDetail = () =>{
             setIsLiked(true)
             const photoDetails = {...photoDetail,liked:true}
             const storedList = JSON.parse(localStorage.getItem('likedList'))
-            storedList.push(photoDetails)
+       
             localStorage.setItem('likedList',JSON.stringify(storedList))
-          
         } 
         else{
             setIsLiked(false)
@@ -75,7 +114,23 @@ const PhotoDetail = () =>{
         }
     }
 
-    
+    const renderSimilarPhotos  = () => {
+      
+      return (
+            <div className={Styles.similarPhotosBg}>
+                {
+                  similarPhotos.map(each=>{
+                  
+                    const {id} = each 
+                    const likedList = JSON.parse(localStorage.getItem('likedList'))
+                    const liked = likedList.some(p=>p.id===each.id)
+                    const photo = {...each,liked}
+                    return <Photo key= {id} photo={photo}/>
+                  })
+                }      
+           </div>
+      )
+    }
     return (
          <>
              <NavBar/>
@@ -100,6 +155,10 @@ const PhotoDetail = () =>{
 
                           <button className={Styles.downloadCta}>Download</button>
                     </div>
+                     
+                    <p className={Styles.similarPara} style ={{fontWeight:900,fontSize:'1.3em' ,marginTop:'100px',marginBottom:0}}>Similar Collections !</p>
+                    
+                    {similarPhotos? renderSimilarPhotos():null}
                  </div>)
              }
             
@@ -107,4 +166,4 @@ const PhotoDetail = () =>{
     )
 }
 
-export  default PhotoDetail
+export  default PhotoDetail 

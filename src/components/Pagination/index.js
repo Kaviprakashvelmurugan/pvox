@@ -21,7 +21,6 @@ const Pagination = ({currentPage,maxPages,handleNextPage}) => {
                 pageList.push(i)
             }
             pageList = [...pageList,<MdOutlineMoreHoriz/>,maxPages]
-            console.log(pageList)
         }
 
         else {
@@ -32,7 +31,6 @@ const Pagination = ({currentPage,maxPages,handleNextPage}) => {
         }
     }
  
-    console.log('page list: ', pageList)
 
 
     const handlePageButtonClick = event => {
