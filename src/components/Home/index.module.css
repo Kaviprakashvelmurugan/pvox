@@ -142,6 +142,11 @@
     padding-left: 0;
     list-style-type: none;
 }
+
+.favoritesHeader{
+    margin-top: 70px;
+    width:95%;
+}
 @media(max-width:1024px){
    .homeContentBg{
     display: flex;

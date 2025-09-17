@@ -154,18 +154,24 @@ class Home extends Component{
                    <ul className={`${ filterBy==='v1' || filterBy==='trending' ? Styles.photoApiBox : Styles.videoApiBox}`}>
                         
                         {(filterBy==='v1' || filterBy==='trending') && photos.length>0 && photos.map(each=>{
-                            const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
-                            const liked = likedList.some(p => p.id === each.id);
-                            const photo = {...each,liked,type:"photo"}
-                            return <Photo key ={each.id} photo={photo}  />
-                        })}
+                           if (!each || !each.id) return null;   // skip bad/null entries
 
+                             const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
+                             const liked = likedList.some(p => p && p.id === each.id);
+                             const photo = {...each, liked, type: "photo"};
+                             return <Photo key={each.id} photo={photo} />
+                             })
+                        }
                         {
                         
                         videos.length>0 && videos.map(each=>{
-                          const video = {...each,liked:false,type:'video'}
-                          return <Video key ={each.id} video={video}/>
-                        })
+                        if (!each || !each.id) return null;
+
+                       const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
+                       const liked = likedList.some(p => p && p.id === each.id);
+                       const video = {...each, liked, type: "video"};
+                       return <Video key={each.id} video={video}/>
+                       })
                         }
 
                        
@@ -184,21 +190,28 @@ class Home extends Component{
        if (likedData.length===0){
           return <div className={Styles.nothingLikedBg}>
                      <video autoPlay playsInline loop muted><source src='https://res.cloudinary.com/dysrfxfyv/video/upload/v1757753739/Screen_Recording_2025-09-13_142024_pax4l9.mp4' type="video/mp4"/> No liked Data Available.</video>
-                     <p>You haven’t liked any videos yet. </p>
+                     <p>You haven’t liked any Media yet. </p>
                 </div>
        }
        
        
-       return <ul className={Styles.likedDataBg}>
-                 
-                 {likedData.map(each=>{
-                  if (each.type === 'video'){
-                    return <Video key={each.id} video={each}/>
-                  }
+       return <>
+                 <div className={Styles.favoritesHeader}>
+                    <p>Your Hearted Media Hub.</p>
+                  </div>
+
+                  <ul className={Styles.likedDataBg}>
+                     {likedData.map(each=>{
+                      if (!each) return null;
+                     if (each.type === 'video'){
+                       return <Video key={each.id} video={each}/>
+                     }
                   
-                   return <Photo key={each.id} photo={each} />
-                 })}
-             </ul>
+                    return each ? <Photo key={each.id} photo={each} /> : null;
+                    })}
+                  </ul>
+
+              </>
     }
     renderSwitcher = () =>{
       const {apiStatus} = this.state

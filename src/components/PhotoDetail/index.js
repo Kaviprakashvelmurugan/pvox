@@ -5,24 +5,33 @@ import Styles from './index.module.css'
 
 import NavBar  from '../Navbar'
 import Photo from '../Photo'
+import PvoxLoader  from '../PvoxLoader'
+import Error404 from '../Error404'
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 
+
 const PhotoDetail = () =>{
     
-
-   
      const [photoDetail,setPhotoDetail] = useState({})
-     const {id,alt,src,avg_color,width,photographer} = photoDetail
+     const {alt,src,avg_color,width,photographer} = photoDetail
     
+ 
+     const apiStatusObj = {
+      loading:'loading',
+      sucesss:'success',
+      failed:'failed'
+     }
+
      const [imgLoaded,setImgLoaded] = useState(false)
      const [isLiked,setIsLiked]  = useState(false)
      const [mainWords,setMainWords] = useState('')
      const [similarPhotos,setSimilarPhotos] = useState(null)
+     const [apiStatus,setApiStatus] = useState(apiStatusObj.loading)
 
      const {photoId} = useParams()
-     
+   
      const fetchPhotoDetails = async () =>{
         const fetchUrl = `https://api.pexels.com/v1/photos/${photoId}`
         const apiKey = process.env.REACT_APP_PEXELS_API_KEY
@@ -38,10 +47,9 @@ const PhotoDetail = () =>{
           const jsonResponse = await response.json()
           if (response.ok){
             setPhotoDetail(jsonResponse)
+            setApiStatus(apiStatusObj.sucesss)
             const stopWords = ['a','an','the','in','on','at','by','for','of','to','with','and','or','but','photo','image','picture','stock'];
-            const {alt} = jsonResponse;
-            const altlist = alt.toLowerCase().split(' ')
-            
+            const altlist = (jsonResponse.alt || '').toLowerCase().split(' ')
             const impWords =altlist.filter(each=>{
               if (!stopWords.includes(each)){
                  return each
@@ -52,7 +60,8 @@ const PhotoDetail = () =>{
         }
 
         catch(error){
-            console.log(error)
+          setApiStatus(apiStatusObj.failed)
+          console.log(error)
         }
     }
 
@@ -64,7 +73,7 @@ const PhotoDetail = () =>{
     useEffect(() => {
      if (Object.keys(photoDetail).length > 0) {
      const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
-     setIsLiked(likedList.some(p => p.id === photoDetail.id));
+     setIsLiked(likedList.some(p => p && p.id === photoDetail.id));
      }
     }, [photoDetail]);
     
@@ -97,19 +106,19 @@ const PhotoDetail = () =>{
     
     const handleLike = () => {
     if (!isLiked){
+            if (!isLiked) {
             setIsLiked(true)
-            const photoDetails = {...photoDetail,liked:true}
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-       
-            localStorage.setItem('likedList',JSON.stringify(storedList))
+            const storedList = JSON.parse(localStorage.getItem('likedList')) || [];
+            storedList.push({...photoDetail, liked: true}); 
+           localStorage.setItem('likedList', JSON.stringify(storedList))
+}
+
         } 
         else{
             setIsLiked(false)
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-            const newLikedList = storedList.filter(each=>{
-                return each.id!==id
-            })
-            localStorage.setItem('likedList',JSON.stringify(newLikedList))
+           const storedList = JSON.parse(localStorage.getItem('likedList')) || [];
+            const newLikedList = storedList.filter(each => each && each.id !== photoDetail.id);
+            localStorage.setItem('likedList', JSON.stringify(newLikedList));
             
         }
     }
@@ -120,10 +129,10 @@ const PhotoDetail = () =>{
             <div className={Styles.similarPhotosBg}>
                 {
                   similarPhotos.map(each=>{
-                  
+                     if (!each || !each.id) return null;
                     const {id} = each 
-                    const likedList = JSON.parse(localStorage.getItem('likedList'))
-                    const liked = likedList.some(p=>p.id===each.id)
+                    const likedList = JSON.parse(localStorage.getItem('likedList')) || [];
+                    const liked = likedList.some(p => p && p.id === each.id);
                     const photo = {...each,liked}
                     return <Photo key= {id} photo={photo}/>
                   })
@@ -131,14 +140,12 @@ const PhotoDetail = () =>{
            </div>
       )
     }
-    return (
-         <>
-             <NavBar/>
-             {  
-               Object.keys(photoDetail).length > 0 &&
-                
-                (
-                  <div className={Styles.photoDetailBg}>
+
+
+    const renderSuccessView = () => {
+      if(Object.keys(photoDetail).length > 0){
+            return (
+               <div className={Styles.photoDetailBg}>
                      <div className={Styles.photoHeader}>
                         <h1>{alt}</h1>
                     </div>
@@ -159,7 +166,38 @@ const PhotoDetail = () =>{
                     <p className={Styles.similarPara} style ={{fontWeight:900,fontSize:'1.3em' ,marginTop:'100px',marginBottom:0}}>Similar Collections !</p>
                     
                     {similarPhotos? renderSimilarPhotos():null}
-                 </div>)
+                 </div>
+            )
+      }
+
+    }
+
+    const renderPvoxLoader = () => {
+      return <div className={Styles.pvoxLoaderBg}>
+                <PvoxLoader/>
+            </div>
+    }
+
+    const render404Error = () => {
+      return <Error404/>
+    }
+
+    const renderSwitcher = () => {
+      switch(apiStatus){
+        case apiStatusObj.loading:
+          return renderPvoxLoader()
+        case apiStatusObj.sucesss:
+          return renderSuccessView()
+        default:
+          return render404Error()
+      }
+    }
+
+    return (
+         <>
+             <NavBar/>
+              {  
+               renderSwitcher()
              }
             
          </>

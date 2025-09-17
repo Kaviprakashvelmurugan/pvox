@@ -59,27 +59,25 @@ const Video = ({video}) => {
     }
 
 
-    const handleVideoLiking = () => {
+const handleVideoLiking = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        if (!isLiked){
-            setLike(true)
-            const photoDetails = {...video,liked:true}
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-            storedList.push(photoDetails)
-            localStorage.setItem('likedList',JSON.stringify(storedList))
-        }
-        else{
-            setLike(false)
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-            const newLikedList = storedList.filter(each=>{
-                return each.id!==id
-            })
-            localStorage.setItem('likedList',JSON.stringify(newLikedList))
-            
-        }
-    }
+      const storedList = JSON.parse(localStorage.getItem("likedList")) || [];
+
+      if (!isLiked) {
+        setLike(true);
+        storedList.push({ ...video, liked: true });
+       localStorage.setItem("likedList", JSON.stringify(storedList));
+      } else {
+         setLike(false);
+         const newList = storedList.filter(each => each.id !== id);
+         localStorage.setItem("likedList", JSON.stringify(newList));
+      }
+    };
+
     return (
-     <Link>
+     <Link to={`videos/${id}`} >
          <li  className={Styles.videoElement}>
             <video   style = {{aspectRatio:`${width}/${height}`}}  ref={videoRef} playsInline muted> <source src={videoUrl}></source></video>
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={Styles.videoOverlay}>
