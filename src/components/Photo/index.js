@@ -58,7 +58,7 @@ const Photo = ({photo}) => {
                <img  ref = {photoRef}  onLoad = {()=>{
                   setImageLoaded(true)
                 }} 
-               src={src.original} alt={alt}/>
+                src={src.original} alt={alt}/>
 
                 <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={Styles.photoOverlay}>
 

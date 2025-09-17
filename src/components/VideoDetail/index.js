@@ -66,9 +66,8 @@ const VideoDetail = () => {
     const handleLike = () => {
     if (!isLiked){
             setIsLiked(true)
-
-            const storedList = JSON.parse(localStorage.getItem('likedList'))
-       
+            const storedList = JSON.parse(localStorage.getItem('likedList')) || []
+            storedList.push({...videoDetail, liked: true,type:'video'}); 
             localStorage.setItem('likedList',JSON.stringify(storedList))
         } 
         else{
@@ -83,6 +82,14 @@ const VideoDetail = () => {
     }
 
 
+    const handleDownload = (fileUrl, fileName) => {
+  const link = document.createElement("a");
+  link.href = fileUrl;
+  link.setAttribute("download", fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
     const renderSuccessView = () =>{ 
       if(Object.keys(videoDetail).length>0){
          return <div className={Styles.videoBox}>
@@ -95,7 +102,9 @@ const VideoDetail = () => {
                              <h1 className={Styles.author}>By {user.name}</h1>
                           </div>
 
-                          <button className={Styles.downloadCta}>Download</button>
+                          <button className={Styles.downloadCta} onClick={()=>{
+                            handleDownload(video_files[0].link,'Pvox-video.mp4')
+                          }}>Download</button>
                     </div>
           </div>
       }

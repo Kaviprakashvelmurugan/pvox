@@ -33,6 +33,7 @@ const PhotoDetail = () =>{
      const {photoId} = useParams()
    
      const fetchPhotoDetails = async () =>{
+         setApiStatus(apiStatusObj.loading)
         const fetchUrl = `https://api.pexels.com/v1/photos/${photoId}`
         const apiKey = process.env.REACT_APP_PEXELS_API_KEY
         const options = {
@@ -68,7 +69,7 @@ const PhotoDetail = () =>{
     
     useEffect(()=>{
       fetchPhotoDetails()
-    },[])
+    },[photoId])
 
     useEffect(() => {
      if (Object.keys(photoDetail).length > 0) {
@@ -141,6 +142,26 @@ const PhotoDetail = () =>{
       )
     }
 
+    
+  const handleDownload = async (fileUrl, fileName) => {
+       try {
+        const response = await fetch(fileUrl);   
+        const blob = await response.blob();                
+        const url = window.URL.createObjectURL(blob);      
+        const link = document.createElement("a");          
+        link.href = url;                                    
+        link.download = fileName;                          
+        document.body.appendChild(link);                    
+        link.click();                                      
+        document.body.removeChild(link);                    
+        window.URL.revokeObjectURL(url);                    
+      } 
+      catch (error) {
+        console.error("Download failed", error);
+     }
+};
+   
+
 
     const renderSuccessView = () => {
       if(Object.keys(photoDetail).length > 0){
@@ -160,7 +181,9 @@ const PhotoDetail = () =>{
                              <h1 className={Styles.author}>By {photographer}</h1>
                           </div>
 
-                          <button className={Styles.downloadCta}>Download</button>
+                          <button onClick={()=>{
+                            handleDownload(src.original,'Pvox-photo.jpg')
+                          }} className={Styles.downloadCta}>Download</button>
                     </div>
                      
                     <p className={Styles.similarPara} style ={{fontWeight:900,fontSize:'1.3em' ,marginTop:'100px',marginBottom:0}}>Similar Collections !</p>

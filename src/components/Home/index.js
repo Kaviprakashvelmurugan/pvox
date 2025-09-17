@@ -186,7 +186,7 @@ class Home extends Component{
 
     showFavorites = () => {
        const likedData = JSON.parse(localStorage.getItem('likedList'))
-
+       console.log(likedData)
        if (likedData.length===0){
           return <div className={Styles.nothingLikedBg}>
                      <video autoPlay playsInline loop muted><source src='https://res.cloudinary.com/dysrfxfyv/video/upload/v1757753739/Screen_Recording_2025-09-13_142024_pax4l9.mp4' type="video/mp4"/> No liked Data Available.</video>
@@ -206,7 +206,7 @@ class Home extends Component{
                      if (each.type === 'video'){
                        return <Video key={each.id} video={each}/>
                      }
-                  
+                
                     return each ? <Photo key={each.id} photo={each} /> : null;
                     })}
                   </ul>
