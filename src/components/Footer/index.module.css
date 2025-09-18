@@ -66,12 +66,18 @@ a:hover{
     color: rgb(181, 43, 255);
 }
 
-a svg {
- margin-right: 10px;
- font-size: 1.7em;
- 
+.footerLinks svg {
+    margin-right: 15px;
+    font-size: 1.4em;
 }
 
+.footerDocs{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    align-items: center;
+    gap: 15px;
+}
 .footChild3{
     width:350px;
     height: 300px;

@@ -22,9 +22,9 @@ const Footer = () => {
 
            <div className={Styles.footChild2}>
               <p className={Styles.connect}>Connect with me</p>
-              <a href="https://github.com/Kaviprakashvelmurugan " target="_blank" rel="noopener noreferrer"> <FaGithub/> <p>Github</p></a>
-              <a href='/'> <FaLinkedinIn/> <p>Linkedin</p></a>
-              <a href="mailto:kaviprakashvelmurugan@gmail.com"> <BiLogoGmail/> <p>Email</p></a>
+              <a className={Styles.footerLinks} href="https://github.com/Kaviprakashvelmurugan " target="_blank" rel="noopener noreferrer"> <FaGithub/> <p>Github</p></a>
+              <a className={Styles.footerLinks} href='/'> <FaLinkedinIn/> <p>Linkedin</p></a>
+              <a className={Styles.footerLinks} href="mailto:kaviprakashvelmurugan@gmail.com"> <BiLogoGmail/> <p>Email</p></a>
             </div>
 
             <div className={Styles.footChild3}>
@@ -33,7 +33,7 @@ const Footer = () => {
                       <p className={Styles.phone}>+91 6374802067</p>
                  </div>
 
-                 <a     href="https://github.com/Kaviprakashvelmurugan/pvox#readme" target="_blank" rel="noopener noreferrer" className={Styles.PvoxreadMe}> <FaReadme/> <p> Pvox Docs</p></a>
+                 <a    className={Styles.footerDocs}  href="https://github.com/Kaviprakashvelmurugan/pvox#readme" target="_blank" rel="noopener noreferrer"> <FaReadme/> <p> Pvox Docs</p></a>
             </div>
 
             <div className={Styles.copyRights}>
