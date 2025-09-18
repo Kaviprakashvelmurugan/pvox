@@ -87,7 +87,7 @@ It demonstrates strong **frontend development skills**, API integration, and a f
 
 
 ### 🖼️ Download Photos 
-![Download Video or Image ](./screenshots/pvox-photo-dwonloaded.png)
+![Download Video or Image ](./screenshots/pvox-photo-downloaded.png)
 
 
 
