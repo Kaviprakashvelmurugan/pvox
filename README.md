@@ -52,6 +52,12 @@ It demonstrates strong **frontend development skills**, API integration, and a f
 ### 🖼️ Photos Loading  
 ![Photos Loading](./screenshots/pvox-photos-loading.png)  
 
+### 🖼️ Specific photo When Clicked  
+![ Specific Photo Detail ] (./screenshots/pvox-specific-photo.png)
+
+### 🖼️ Similar Photos 
+![Similar Collections ] (./screenshots/pvox-similar-collections.png)
+
 ### ❤️ Liked Resources  
 ![Liked Resources](./screenshots/pvox-liked-resources.png)  
 
