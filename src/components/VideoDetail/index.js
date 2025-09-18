@@ -10,7 +10,7 @@ import { MdFavorite } from "react-icons/md";
 import Navbar from '../Navbar'
 import PvoxLoader from '../PvoxLoader'
 import Error404 from '../Error404'
-
+import Footer from '../Footer'
 
 const VideoDetail = () => {
     
@@ -126,6 +126,7 @@ const VideoDetail = () => {
       <>
         <Navbar/>
         {renderSwitcher()}
+        <Footer/>
       </>
     )
 }

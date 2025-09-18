@@ -7,6 +7,7 @@ import NavBar  from '../Navbar'
 import Photo from '../Photo'
 import PvoxLoader  from '../PvoxLoader'
 import Error404 from '../Error404'
+import Footer from '../Footer'
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
@@ -222,6 +223,8 @@ const PhotoDetail = () =>{
               {  
                renderSwitcher()
              }
+
+             <Footer/>
             
          </>
     )

@@ -6,6 +6,7 @@ import Photo from '../Photo'
 import Video from '../Video'
 import Error404 from '../Error404'
 import Pagination from '../Pagination'
+import Footer from '../Footer'
 
 import { IoMdArrowDropdown } from "react-icons/io";
 
@@ -151,8 +152,9 @@ class Home extends Component{
       const {photos,videos,filterBy,page,maxPage} = this.state
           return (
             <>
+                  {filterBy==='trending' ? <p className={Styles.trendingPara}>Handpicked trending collections !</p>:null}
                    <ul className={`${ filterBy==='v1' || filterBy==='trending' ? Styles.photoApiBox : Styles.videoApiBox}`}>
-                        
+                         
                         {(filterBy==='v1' || filterBy==='trending') && photos.length>0 && photos.map(each=>{
                            if (!each || !each.id) return null;   // skip bad/null entries
 
@@ -264,8 +266,11 @@ class Home extends Component{
                             </div>
                      </form>  
                       {this.renderSwitcher()}
+
                   </div>
               </div>
+
+              <Footer/>
             </div>
         )
     }

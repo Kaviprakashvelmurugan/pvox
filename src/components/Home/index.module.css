@@ -147,6 +147,11 @@
     margin-top: 70px;
     width:95%;
 }
+
+.trendingPara{
+    width: 100%;
+    margin-top: 60px;
+}
 @media(max-width:1024px){
    .homeContentBg{
     display: flex;
@@ -287,6 +292,11 @@
 }
   .pvoxErrorBg video{
     width:400px;
+}
+.trendingPara{
+    width: 95%;
+    margin-top: 60px;
+    margin-left: 10px;
 }
 }
 
