@@ -5,6 +5,11 @@ It demonstrates strong **frontend development skills**, API integration, and a f
 
 ---
 
+![Home](./screenshots/pvox-home.png) 
+
+
+
+
 ## ✨ Key Features  
 
 - 📸 **Browse & Download Media**  
@@ -43,47 +48,118 @@ It demonstrates strong **frontend development skills**, API integration, and a f
 ### 🏠 Home Page  
 ![Home](./screenshots/pvox-home.png)  
 
+
+
+
 ### 📑 Pagination  
 ![Pagination](./screenshots/pvox-pagination.png)  
+
+
+
+
 
 ### 🎬 Videos Loading  
 ![Videos Loading](./screenshots/pvox-videos-loading.png)  
 
+
+
+
+
 ### 🖼️ Photos Loading  
 ![Photos Loading](./screenshots/pvox-photos-loading.png)  
 
+
+
+
+
 ### 🖼️ Specific photo When Clicked  
-![ Specific Photo Detail ] (./screenshots/pvox-specific-photo.png)
+![ Specific Photo Detail ](./screenshots/pvox-specific-photo.png)
+
+
+
+
 
 ### 🖼️ Similar Photos 
-![Similar Collections ] (./screenshots/pvox-similar-collections.png)
+![Similar Collections ](./screenshots/pvox-similar-collections.png)
+
+
+
+
+
+### 🖼️ Download Photos 
+![Download Video or Image ](./screenshots/pvox-photo-dwonloaded.png)
+
+
+
+
 
 ### ❤️ Liked Resources  
 ![Liked Resources](./screenshots/pvox-liked-resources.png)  
 
+
+
+
+
 ### 🛠️ Fetching Resources  
 ![Fetching Resources](./screenshots/pvox-fetching-resources.png)  
 
+
+
+
+
 ### 📱 Responsive Filters (Mobile)  
-![Responsive Filters Mobile](./screenshots/pvox-responsive-mobile.png)  
+![Responsive Filters Mobile](./screenshots/pvox-responsive-mobile.png) 
+
+
+
+
 
 ### 💻 Responsive Filters (Tablet)  
 ![Responsive Filters Tablet](./screenshots/pvox-responsive-tablet.png)  
 
+
+
+
+
 ### ⚠️ 404 Error Page  
 ![404 Error](./screenshots/pvox-404-error.png)  
+
+
+
+
+
 
 ### 🎨 Footer  
 ![Footer](./screenshots/pvox-footer.png)  
 
+
+
+
+
+
 ### ⭐ Trending Section  
 ![Trending](./screenshots/pvox-trending.png)  
+
+
+
+
+
 
 ### 🖱️ Hover Effect  
 ![Hover Effect](./screenshots/pvox-hover.png)  
 
+
+
+
+
+
 ### 📭 When Nothing is Liked  
 ![Nothing Liked](./screenshots/pvox-nothing-liked.png)  
+
+
+
+
+
 
 ---
 
