@@ -95,7 +95,7 @@ const VideoDetail = () => {
          return <div className={Styles.videoBox}>
                <video autoPlay playsInline muted loop style={{width:height>3000 ? '30%' :'70%',aspectRatio:`${width}/${height}`}}><source src={video_files[0].link}  ></source> Video</video>
 
-                <div  className={Styles.likeAndDownload} style={{width:height>3000 ? '30%' :'70%', height:60}}>
+                <div  className={Styles.likeAndDownload} style={{width:height>3000 ? '90%' :'90%', height:60}}>
                           <div className={Styles.authorAndLike}>
                              {isLiked?<MdFavorite className={Styles.liked} onClick={handleLike}/> : <MdFavoriteBorder className={Styles.like} onClick={handleLike}/>}
                              
