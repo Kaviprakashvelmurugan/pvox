@@ -50,3 +50,17 @@
     border-radius: 10px;
 }
 
+@media (max-width:568px){
+    .navLogin button{
+   
+    font-size: 0.7em;
+    
+    width: 90px;
+    height: 40%;
+   
+}
+
+.navLogin {
+    font-size: 0.8em;
+}
+}

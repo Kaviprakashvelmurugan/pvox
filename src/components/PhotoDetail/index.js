@@ -171,11 +171,12 @@ const PhotoDetail = () =>{
                      <div className={Styles.photoHeader}>
                         <h1>{alt}</h1>
                     </div>
+
                     <img onLoad={()=>{
                         setImgLoaded(true)
-                    }} className={Styles.photo} src={src.original} alt={alt}  style={{background:imgLoaded? 'transparent' : avg_color,width:width>4000 ? '65%' :'35%'}}/>
+                    }} className={Styles.photo} src={src.original} alt={alt}  style={{background:imgLoaded? 'transparent' : avg_color,width:width>4000 ? '85%' :'55%'}}/>
                     
-                    <div  className={Styles.likeAndDownload} style={{width:width>4000 ? '65%' :'35%', height:60}}>
+                    <div  className={Styles.likeAndDownload} style={{width:width>4000 ? '90%' :'90%', height:60}}>
                           <div className={Styles.authorAndLike}>
                              {isLiked?<MdFavorite className={Styles.liked} onClick={handleLike}/> : <MdFavoriteBorder className={Styles.like} onClick={handleLike}/>}
                              
